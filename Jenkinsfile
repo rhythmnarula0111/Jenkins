@@ -23,7 +23,7 @@ pipeline {
             emailext (
                 subject: "Pipeline Success",
                 body: "Your pipeline ran successfully.",
-                to: "s223770022@deakin.edu.au"
+                to: "rhythmn00@gmail.com"
             )
         }
         failure {
@@ -31,7 +31,7 @@ pipeline {
             emailext (
                 subject: "Pipeline Failed",
                 body: "Your pipeline failed. Check the attached logs for details.",
-                to: "s223770022@deakin.edu.au",
+                to: "rhythmn00@gmail.com",
                 attachLog: true
             )
         }
