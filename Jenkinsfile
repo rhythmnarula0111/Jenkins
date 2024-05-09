@@ -4,62 +4,67 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Build the code using Maven
-                sh 'mvn clean install'
+                sh 'echo "Building the code"'
+                // Use a build automation tool like Maven
+                // Example: sh 'mvn clean package'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests using JUnit
-                sh 'mvn test'
-                // Run integration tests using Selenium or other tools
-                // Example: sh 'selenium-command'
+                sh 'echo "Running unit tests"'
+                // Use test automation tools for unit and integration tests
+                // Example: sh 'npm test'
             }
         }
         stage('Code Analysis') {
             steps {
-                // Integrate code analysis using SonarQube or Checkstyle
-                // Example: sh 'sonar-scanner'
+                sh 'echo "Running code analysis"'
+                // Integrate a code analysis tool
+                // Example: sh 'eslint .'
             }
         }
         stage('Security Scan') {
             steps {
-                // Perform security scan using OWASP ZAP or SonarQube
-                // Example: sh 'zap-cli'
+                sh 'echo "Performing security scan"'
+                // Use a security scanning tool
+                // Example: sh 'nmap -p 80 <target>'
             }
         }
         stage('Deploy to Staging') {
             steps {
-                // Deploy to staging server using Jenkins SSH plugin or Ansible
-                // Example: sh 'ansible-playbook deploy-staging.yml'
+                sh 'echo "Deploying to staging server"'
+                // Deploy to staging server
+                // Example: sh 'ssh user@staging-server "deploy-script.sh"'
             }
         }
         stage('Integration Tests on Staging') {
             steps {
-                // Run integration tests on staging environment
-                // Example: sh 'selenium-command'
+                sh 'echo "Running integration tests on staging"'
+                // Run integration tests on staging
+                // Example: sh 'npm run integration-test'
             }
         }
         stage('Deploy to Production') {
             steps {
-                // Deploy to production server using Jenkins SSH plugin or Ansible
-                // Example: sh 'ansible-playbook deploy-production.yml'
+                sh 'echo "Deploying to production server"'
+                // Deploy to production server
+                // Example: sh 'ssh user@production-server "deploy-script.sh"'
             }
         }
     }
     
     post {
-        success {
-            // Send email notification on success
-            emailext body: 'Pipeline successfully executed',
-                     subject: "Pipeline Success",
-                     to: 'rhythmn00@gmail.com'
-        }
         failure {
-            // Send email notification on failure
-            emailext body: 'Pipeline failed to execute',
-                     subject: "Pipeline Failure",
-                     to: 'rhythmn00@gmail.com'
+            emailext subject: "Pipeline Failed",
+                     body: "Pipeline failed. See attached logs for details.",
+                     attachLog: true,
+                     to: "rhythmn00@gmail.com"
+        }
+        success {
+            emailext subject: "Pipeline Succeeded",
+                     body: "Pipeline succeeded. See attached logs for details.",
+                     attachLog: true,
+                     to: "rhythmn00@gmail.com"
         }
     }
 }
