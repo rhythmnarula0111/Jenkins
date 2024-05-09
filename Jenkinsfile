@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'Maven' // This assumes you have configured Maven in Jenkins under Manage Jenkins > Global Tool Configuration
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -11,11 +15,9 @@ pipeline {
         stage('Unit and Integration Tests') {
             steps {
                 // Run unit tests with JUnit
-                // Assuming your unit tests are executed using a command like 'mvn test'
                 sh 'mvn test'
 
                 // Run integration tests with Selenium or Postman
-                // Assuming your integration tests are executed using a command like 'mvn verify'
                 sh 'mvn verify'
             }
         }
