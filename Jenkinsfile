@@ -2,13 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout your source code from version control
-                git 'https://github.com/rhythmnarula0111/your-repo.git'
-            }
-        }
-        
         stage('Build') {
             steps {
                 // Compile your code
