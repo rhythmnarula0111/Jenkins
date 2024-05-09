@@ -4,15 +4,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Replace 'gradle' with your build tool command
+                // Define build steps here
                 sh 'gradle clean build'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                // Replace 'gradle' with your build tool command
+                // Define test steps here
                 sh 'gradle test'
-                
                 // Run integration tests using appropriate commands
             }
         }
