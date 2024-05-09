@@ -4,47 +4,46 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Build the code using a build automation tool (e.g., Maven)
-                sh 'mvn clean package'
+                // Replace 'gradle' with your build tool command
+                sh 'gradle clean build'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests
-                sh 'mvn test'
+                // Replace 'gradle' with your build tool command
+                sh 'gradle test'
                 
-                // Run integration tests
-                sh 'mvn integration-test'
+                // Run integration tests using appropriate commands
             }
         }
         stage('Code Analysis') {
             steps {
                 // Integrate a code analysis tool (e.g., SonarQube) to analyze the code
-                sh 'sonar-scanner'
+                // Replace with appropriate commands for code analysis
             }
         }
         stage('Security Scan') {
             steps {
                 // Perform a security scan on the code using a tool (e.g., OWASP Dependency-Check)
-                sh 'dependency-check --scan . --format HTML'
+                // Replace with appropriate commands for security scan
             }
         }
         stage('Deploy to Staging') {
             steps {
                 // Deploy the application to a staging server (e.g., AWS EC2 instance)
-                sh 'ssh user@staging-server "deploy.sh"'
+                // Replace with appropriate commands for deployment to staging
             }
         }
         stage('Integration Tests on Staging') {
             steps {
                 // Run integration tests on the staging environment
-                sh 'ssh user@staging-server "run-tests.sh"'
+                // Replace with appropriate commands for integration tests on staging
             }
         }
         stage('Deploy to Production') {
             steps {
                 // Deploy the application to a production server (e.g., AWS EC2 instance)
-                sh 'ssh user@production-server "deploy.sh"'
+                // Replace with appropriate commands for deployment to production
             }
         }
     }
@@ -55,7 +54,7 @@ pipeline {
             emailext (
                 subject: "Pipeline Success",
                 body: "Your pipeline ran successfully.",
-                to: "rhythmn00@gmail.com"
+                to: "your@email.com"
             )
         }
         failure {
@@ -63,10 +62,9 @@ pipeline {
             emailext (
                 subject: "Pipeline Failed",
                 body: "Your pipeline failed. Check the attached logs for details.",
-                to: "rhythmn00@gmail.com",
+                to: "your@email.com",
                 attachLog: true
             )
         }
     }
 }
-
