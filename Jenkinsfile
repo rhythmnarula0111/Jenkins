@@ -4,51 +4,66 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                // Compile your code
-                sh 'javac -d target/classes src/*.java'
+                // Build the code using a build automation tool (e.g., Maven)
+                sh 'mvn clean package'
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+                // Run unit tests
+                sh 'mvn test'
                 
-                // Package your code into a JAR file
-                sh 'jar cvf myapp.jar -C target/classes .'
+                // Run integration tests
+                sh 'mvn integration-test'
             }
         }
-
-        stage('Unit Test') {
+        stage('Code Analysis') {
             steps {
-                // Run your unit tests
-                sh 'java -cp target/classes org.junit.runner.JUnitCore YourUnitTestClassName'
+                // Integrate a code analysis tool (e.g., SonarQube) to analyze the code
+                sh 'sonar-scanner'
             }
         }
-
-        stage('Integration Test') {
+        stage('Security Scan') {
             steps {
-                // Run your integration tests
-                // Example: sh 'java -jar your_integration_test.jar'
+                // Perform a security scan on the code using a tool (e.g., OWASP Dependency-Check)
+                sh 'dependency-check --scan . --format HTML'
             }
         }
-
-        stage('Deploy') {
+        stage('Deploy to Staging') {
             steps {
-                // Deploy your application
-                // Example: sh 'scp myapp.jar user@host:/path/to/deployment/directory'
+                // Deploy the application to a staging server (e.g., AWS EC2 instance)
+                sh 'ssh user@staging-server "deploy.sh"'
+            }
+        }
+        stage('Integration Tests on Staging') {
+            steps {
+                // Run integration tests on the staging environment
+                sh 'ssh user@staging-server "run-tests.sh"'
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                // Deploy the application to a production server (e.g., AWS EC2 instance)
+                sh 'ssh user@production-server "deploy.sh"'
             }
         }
     }
 
     post {
         success {
-            // Send success notification email
+            // Send email notification for successful pipeline execution
             emailext (
                 subject: "Pipeline Success",
                 body: "Your pipeline ran successfully.",
-                to: "rhythmn00@gmail.com"
+                to: "your@email.com"
             )
         }
         failure {
-            // Send failure notification email with logs attached
+            // Send email notification for failed pipeline execution
             emailext (
                 subject: "Pipeline Failed",
                 body: "Your pipeline failed. Check the attached logs for details.",
-                to: "rhythmn00@gmail.com",
+                to: "your@email.com",
                 attachLog: true
             )
         }
