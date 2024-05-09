@@ -53,13 +53,13 @@ pipeline {
             // Send email notification on success
             emailext body: 'Pipeline successfully executed',
                      subject: "Pipeline Success",
-                     to: 'your-email@example.com'
+                     to: 'rhythmn00@gmail.com'
         }
         failure {
             // Send email notification on failure
             emailext body: 'Pipeline failed to execute',
                      subject: "Pipeline Failure",
-                     to: 'your-email@example.com'
+                     to: 'rhythmn00@gmail.com'
         }
     }
 }
