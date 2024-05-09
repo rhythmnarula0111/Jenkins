@@ -1,69 +1,65 @@
 pipeline {
     agent any
-
+    
     stages {
         stage('Build') {
             steps {
-                // Define build steps here
-                sh 'gradle clean build'
+                // Build the code using Maven
+                sh 'mvn clean install'
             }
         }
         stage('Unit and Integration Tests') {
             steps {
-                // Define test steps here
-                sh 'gradle test'
-                // Run integration tests using appropriate commands
+                // Run unit tests using JUnit
+                sh 'mvn test'
+                // Run integration tests using Selenium or other tools
+                // Example: sh 'selenium-command'
             }
         }
         stage('Code Analysis') {
             steps {
-                // Integrate a code analysis tool (e.g., SonarQube) to analyze the code
-                // Replace with appropriate commands for code analysis
+                // Integrate code analysis using SonarQube or Checkstyle
+                // Example: sh 'sonar-scanner'
             }
         }
         stage('Security Scan') {
             steps {
-                // Perform a security scan on the code using a tool (e.g., OWASP Dependency-Check)
-                // Replace with appropriate commands for security scan
+                // Perform security scan using OWASP ZAP or SonarQube
+                // Example: sh 'zap-cli'
             }
         }
         stage('Deploy to Staging') {
             steps {
-                // Deploy the application to a staging server (e.g., AWS EC2 instance)
-                // Replace with appropriate commands for deployment to staging
+                // Deploy to staging server using Jenkins SSH plugin or Ansible
+                // Example: sh 'ansible-playbook deploy-staging.yml'
             }
         }
         stage('Integration Tests on Staging') {
             steps {
-                // Run integration tests on the staging environment
-                // Replace with appropriate commands for integration tests on staging
+                // Run integration tests on staging environment
+                // Example: sh 'selenium-command'
             }
         }
         stage('Deploy to Production') {
             steps {
-                // Deploy the application to a production server (e.g., AWS EC2 instance)
-                // Replace with appropriate commands for deployment to production
+                // Deploy to production server using Jenkins SSH plugin or Ansible
+                // Example: sh 'ansible-playbook deploy-production.yml'
             }
         }
     }
-
+    
     post {
         success {
-            // Send email notification for successful pipeline execution
-            emailext (
-                subject: "Pipeline Success",
-                body: "Your pipeline ran successfully.",
-                to: "your@email.com"
-            )
+            // Send email notification on success
+            emailext body: 'Pipeline successfully executed',
+                     subject: "Pipeline Success",
+                     to: 'your-email@example.com'
         }
         failure {
-            // Send email notification for failed pipeline execution
-            emailext (
-                subject: "Pipeline Failed",
-                body: "Your pipeline failed. Check the attached logs for details.",
-                to: "your@email.com",
-                attachLog: true
-            )
+            // Send email notification on failure
+            emailext body: 'Pipeline failed to execute',
+                     subject: "Pipeline Failure",
+                     to: 'your-email@example.com'
         }
     }
 }
