@@ -5,8 +5,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo "Building the code"'
-                // Use a build automation tool like Maven
-                // Example: sh 'mvn clean package'
+                    // Use a build automation tool like Maven
+                    // Example: sh 'mvn clean 
             }
         }
         stage('Unit and Integration Tests') {
